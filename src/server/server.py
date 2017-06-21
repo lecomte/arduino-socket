@@ -8,19 +8,15 @@ PORTA = 7070
 ARDUINO_SERVIDOR = '192.168.1.44'
 ARDUINO_PORTA  = 8080
 
-def get(value):
+def get(envia):
 	arduinoSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 	destino = (ARDUINO_SERVIDOR, ARDUINO_PORTA)
 	arduinoSocket.connect(destino)
-	mensagem = "G%d" % (value)
-	arduinoSocket.sendall(mensagem)
+	arduinoSocket.sendall(envia)
 	ret = arduinoSocket.recv(1024)
 	ret = ctypes.create_string_buffer(ret)
 	arduinoSocket.close()
-	if (ret[0] == 'R'):
-		return ret;
-	else:
-		return "ERROR"
+	return ret
 
 def conectado(conex, cliente):
     print 'Conexao recebida: ', cliente
@@ -29,7 +25,8 @@ def conectado(conex, cliente):
         s = conex.recv(1024)
         mensagem = ctypes.create_string_buffer(s)
         if (mensagem[0] == 'G'):
-        	ans = get(int(s[1:]))
+        	print 'Operacao GET recebida de ', cliente
+        	ans = get(mensagem)
         	if (ans[0] == 'R'):
         		print 'Valor recebido de Arduino (', ARDUINO_SERVIDOR, ':' , ARDUINO_PORTA, ') -> ', ans[1:]
         		conex.sendall(ans)
