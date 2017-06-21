@@ -28,6 +28,16 @@ def conectado(conex, cliente):
     while True:
         s = conex.recv(1024)
         mensagem = ctypes.create_string_buffer(s)
+        if (mensagem[0] == 'G'):
+        	ans = get(int(mensagem[1:]))
+        	if (ans[0] == 'R'):
+        		print 'Valor recebido de Arduino (', ARDUINO_SERVIDOR, ':' , ARDUINO_PORTA, ') -> ', ans[1:]
+        		conex.sendall(ans)
+        		print 'Valor ' , ans[1:], ' transmitido ao cliente ', cliente
+        	else:
+        		print 'Erro recebido de Arduino (', ARDUINO_SERVIDOR, ':' , ARDUINO_PORTA, ')'
+        		conex.sendall(ans)
+        		print 'Erro transmitido ao cliente ', cliente
         print cliente, ' Mensagem recebida: ', mensagem
     print 'Encerrando conexao: ', cliente
     conex.close()
