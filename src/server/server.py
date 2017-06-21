@@ -6,7 +6,7 @@ import ctypes
 SERVIDOR = '127.0.0.1'
 PORTA = 7070
 ARDUINO_SERVIDOR = '192.168.1.44'
-ARDUINO_PORTA  = '8080'
+ARDUINO_PORTA  = 8080
 
 def get(value):
 	arduinoSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -29,7 +29,7 @@ def conectado(conex, cliente):
         s = conex.recv(1024)
         mensagem = ctypes.create_string_buffer(s)
         if (mensagem[0] == 'G'):
-        	ans = get(int(mensagem[1:]))
+        	ans = get(int(s[1:]))
         	if (ans[0] == 'R'):
         		print 'Valor recebido de Arduino (', ARDUINO_SERVIDOR, ':' , ARDUINO_PORTA, ') -> ', ans[1:]
         		conex.sendall(ans)
