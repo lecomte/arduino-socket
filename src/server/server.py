@@ -35,8 +35,10 @@ def conectado(conex, cliente):
         		print 'Erro recebido de Arduino (', ARDUINO_SERVIDOR, ':' , ARDUINO_PORTA, ')'
         		conex.sendall(ans)
         		print 'Erro transmitido ao cliente ', cliente
-        elif (mensagem[0] == 'M')
+        elif (mensagem[0] == 'M') :
             print cliente, ' Mensagem recebida: ', mensagem[1:]
+        elif (mensagem[0] == 'Q') :
+            break
     print 'Encerrando conexao: ', cliente
     conex.close()
     thread.exit()
