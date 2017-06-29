@@ -46,7 +46,7 @@ void loop() {
           }
           else {
             if (message[0] == 'G') {
-              int result, pos = message.substring(1, message.length() - 1).toInt();
+              int result, pos = message.substring(1, message.length()).toInt();
               if (pos <= 13) {
                 result = digitalRead(pos);
               }
@@ -57,7 +57,7 @@ void loop() {
               client.println(result);
             }
             else if (message[0] == 'S') {
-
+              
             }
             message = "";
             break;
