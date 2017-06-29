@@ -44,7 +44,18 @@ void loop() {
           if (c != '\n') {
             message += c;
           }
+          else {
+            if (message[0] == 'G') {
+
+            }
+            else if (message[0] == 'S') {
+
+            }
+            message = "";
+          }
         }
     }
+    client.stop();
+    Serial.println("Conexao encerrada!");
   }
 }
