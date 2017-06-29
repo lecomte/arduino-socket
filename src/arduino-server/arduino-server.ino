@@ -9,15 +9,17 @@
     * NodeMCU
   Dependencies:
     * Ethernet, 1.1.2
+    * SPI, 1.0.0
   Description:
     Descrição do projeto ...........................................
   Continuação da descrição do projeto.
 */
-
+#include <SPI.h>
+#include <Ethernet.h>
 
 void setup() {
   // put your setup code here, to run once:
-
+  
 }
 
 void loop() {
