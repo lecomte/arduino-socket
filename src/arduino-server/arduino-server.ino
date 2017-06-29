@@ -11,8 +11,7 @@
     * Ethernet, 1.1.2
     * SPI, 1.0.0
   Description:
-    Descrição do projeto ...........................................
-  Continuação da descrição do projeto.
+    Um simples robô que recebe solicitações dos tipos Get e Set para modificar ou consultar valores de pinos do Arduino ou de um vetor de inteiros.
 */
 #include <SPI.h>
 #include <Ethernet.h>
