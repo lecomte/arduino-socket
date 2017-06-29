@@ -5,7 +5,7 @@ import ctypes
 
 SERVIDOR = '127.0.0.1'
 PORTA = 7070
-ARDUINO_SERVIDOR = '192.168.1.44'
+ARDUINO_SERVIDOR = '192.168.1.155'
 ARDUINO_PORTA  = 8080
 
 def getSet(envia):
