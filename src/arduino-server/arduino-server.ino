@@ -57,7 +57,21 @@ void loop() {
               client.println(result);
             }
             else if (message[0] == 'S') {
-              
+              message = message.substring(1, message.length());
+              int eqPos = message.indexOf('=');
+              int dest = message.substring(0,eqPos).toInt(), num = message.substring(eqPos + 1, message.length()).toInt();
+              if (dest <= 13) {
+                if (num > 1 || num < 0) {
+                  client.println("R0");
+                }
+                else {
+                  digitalWrite(dest, num);
+                  client.println("R1");
+                }
+              }
+              else {
+                values[dest] = num;
+              } 
             }
             message = "";
             break;
