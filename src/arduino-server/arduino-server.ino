@@ -35,6 +35,15 @@ void loop() {
   // put your main code here, to run repeatedly:
   EthernetClient client = server.available();
   if (client) {
-    
+    Serial.println("Conexao recebida!");
+    String message = "";
+    while (client.connected()){
+        if (client.available()) {
+          char c = client.read();
+          if (c != '\n') {
+            message += c;
+          }
+        }
+    }
   }
 }
