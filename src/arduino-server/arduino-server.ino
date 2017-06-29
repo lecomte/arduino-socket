@@ -19,6 +19,7 @@
 
 byte mac[] = {0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED};
 IPAddress ip(192, 168, 1, 155);
+int values[27];
 
 EthernetServer server(8080);
 
