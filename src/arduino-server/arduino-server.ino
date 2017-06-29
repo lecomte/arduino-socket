@@ -25,6 +25,10 @@ EthernetServer server(8080);
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(9600);
+  Ethernet.begin(mac, ip);
+  server.begin();
+  Serial.print("Servidor iniciado em: ");
+  Serial.println(Ethernet.localIP());
 }
 
 void loop() {
