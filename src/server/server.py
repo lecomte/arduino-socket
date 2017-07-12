@@ -5,7 +5,7 @@ import ctypes
 
 SERVIDOR = '127.0.0.1'
 PORTA = 7070
-ARDUINO_SERVIDOR = '192.168.1.155'
+ARDUINO_SERVIDOR = '192.168.141.30'
 ARDUINO_PORTA  = 8080
 
 def getSet(envia):
@@ -23,7 +23,9 @@ def conectado(conex, cliente):
 
     while True:
         s = conex.recv(1024)
+	s += '\n'
         mensagem = ctypes.create_string_buffer(s)
+	
         if (mensagem[0] == 'G' or mensagem[0] == 'S'):
         	print 'Operacao GET recebida de ', cliente
         	ans = getSet(mensagem)
