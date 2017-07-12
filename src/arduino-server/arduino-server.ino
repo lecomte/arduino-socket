@@ -17,7 +17,7 @@
 #include <Ethernet.h>
 
 byte mac[] = {0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED};
-IPAddress ip(192, 168, 1, 155);
+IPAddress ip(192, 168, 141, 30);
 int values[27];
 
 EthernetServer server(8080);
@@ -45,6 +45,7 @@ void loop() {
           }
           else {
             if (message[0] == 'G') {
+              Serial.println("Operacao GET recebida!");
               int result, pos = message.substring(1, message.length()).toInt();
               if (pos <= 13) {
                 result = digitalRead(pos);
@@ -52,13 +53,22 @@ void loop() {
               else {
                 result = values[pos - 13];
               }
-              client.print("R");
-              client.println(result);
+              Serial.print("Valor solicitado ");
+              Serial.print(pos);
+              Serial.print(": ");
+              Serial.println(result);
+              String sres(result);
+              client.print("R" + sres);
             }
             else if (message[0] == 'S') {
+              Serial.println("Operacao SET recebida!");
               message = message.substring(1, message.length());
               int eqPos = message.indexOf('=');
               int dest = message.substring(0,eqPos).toInt(), num = message.substring(eqPos + 1, message.length()).toInt();
+              Serial.print("Valor solicitado ");
+              Serial.print(dest);
+              Serial.print(": ");
+              Serial.println(num);
               if (dest <= 13) {
                 if (num > 1 || num < 0) {
                   client.println("R0");
@@ -69,7 +79,8 @@ void loop() {
                 }
               }
               else {
-                values[dest] = num;
+                values[dest - 13] = num;
+                client.println("R1");
               } 
             }
             message = "";
