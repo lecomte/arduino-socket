@@ -15,6 +15,7 @@
     Um simples robô que recebe solicitações dos tipos Get e Set para modificar ou consultar valores de pinos do Arduino ou de um vetor de inteiros.
 */
 #include <SPI.h>
+#include "arduino-server.h"
 
 #define ENCODER_DIREITA 2
 #define ENCODER_ESQUERDA 3
@@ -75,16 +76,16 @@ void setup() {
   pinMode(ENCODER_ESQUERDA, INPUT_PULLUP);
 
   // Funções de Interrupção de cada um dos Encoders
-  attachInterrupt(digitalPinToInterrupt(ENCODER_DIREITA), contadorDireita, CHANGE);
-  attachInterrupt(digitalPinToInterrupt(ENCODER_ESQUERDA), contadorEsquerda, CHANGE);
+  attachInterrupt((ENCODER_DIREITA), contadorDireita, CHANGE);
+  attachInterrupt((ENCODER_ESQUERDA), contadorEsquerda, CHANGE);
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
   if (Serial.available()) {
         String s = Serial.readString();
-          if (message[0] == 'G') {
-            int result, pos = message.substring(1, message.length()).toInt();
+          if (s[0] == 'G') {
+            int result, pos = s.substring(1, s.length()).toInt();
             if (pos <= 13) {
               result = digitalRead(pos);
             }
@@ -97,10 +98,10 @@ void loop() {
             String sres(result);
             Serial.println("R" + sres);
           }
-          else if (message[0] == 'S') {
-            message = message.substring(1, message.length());
-            int eqPos = message.indexOf('=');
-            int dest = message.substring(0, eqPos).toInt(), num = message.substring(eqPos + 1, message.length()).toInt();
+          else if (s[0] == 'S') {
+            s = s.substring(1, s.length());
+            int eqPos = s.indexOf('=');
+            int dest = s.substring(0, eqPos).toInt(), num = s.substring(eqPos + 1, s.length()).toInt();
             if (dest <= 13) {
               if (num > 1 || num < 0) {
                 Serial.println("R0");
@@ -115,10 +116,8 @@ void loop() {
               Serial.println("R1");
             }
           }
-          message = "";
-          break;
+          s = "";
     }
-  }
   else {
     if (values[1] >= 1) {
       ACELERA_DIREITA(velocidadeDireita);
